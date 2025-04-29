@@ -14,6 +14,7 @@ class LoginPage(BasePage):
     @allure.step('Нажимаем на кнопку "Восстановить пароль"')
     def click_restore_password(self):
 
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, self.timeout).until(
             EC.element_to_be_clickable(LoginPageLocators.BUTTON_RECOVER_PASSWORD)
         ).click()
+
