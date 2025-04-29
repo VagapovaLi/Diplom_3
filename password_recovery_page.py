@@ -11,7 +11,6 @@ class PasswordRecoveryPage(BasePage):
         super().__init__(driver)
 
 
-
     @allure.step('Проверяем наличие кнопки "Восстановить" и возвращаем текущий URL')
     def find_button_restore_return_url(self):
         WebDriverWait(self.driver, 10).until(
