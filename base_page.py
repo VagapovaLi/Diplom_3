@@ -16,6 +16,6 @@ class BasePage:
 
     @allure.step('Нажимаем на кнопку "Личный кабинет" на главной странице')
     def click_button_personal_account(self):
-        WebDriverWait(self.driver, 10).until(
-            EC.visibility_of_element_located(BasePageLocators.BUTTON_PERSONAL_ACCOUNT)
+        WebDriverWait(self.driver,  10).until(
+            EC.element_to_be_clickable(BasePageLocators.BUTTON_PERSONAL_ACCOUNT)
         ).click()
