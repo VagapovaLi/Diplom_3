@@ -19,3 +19,10 @@ class BasePage:
         WebDriverWait(self.driver,  10).until(
             EC.element_to_be_clickable(BasePageLocators.BUTTON_PERSONAL_ACCOUNT)
         ).click()
+
+
+    @allure.step('Нажимаем на кнопку "Конструктор" на главной странице')
+    def click_button_link_constructor(self):
+        WebDriverWait(self.driver,  10).until(
+            EC.element_to_be_clickable(BasePageLocators.BUTTON_CONSTRUCTOR)
+        ).click()
