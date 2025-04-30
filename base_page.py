@@ -26,3 +26,10 @@ class BasePage:
         WebDriverWait(self.driver,  10).until(
             EC.element_to_be_clickable(BasePageLocators.BUTTON_CONSTRUCTOR)
         ).click()
+
+
+    @allure.step('Нажимаем на кнопку "Лента заказов" на главной странице')
+    def click_button_order_feed(self):
+        WebDriverWait(self.driver,  10).until(
+            EC.element_to_be_clickable(BasePageLocators.BUTTON_ORDER_FEED)
+        ).click()
