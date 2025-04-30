@@ -18,3 +18,21 @@ class TestHomePage:
         current_url = home_page.find_home_page_title_and_return_current_url()
         assert current_url == urls.BASE_URL
 
+    @allure.title('Проверка перехода в "Лента заказов"')
+    def test_go_to_constructor(self, driver):
+        home_page = HomePage(driver)
+        home_page.open(urls.LOGIN_URL)
+        time.sleep(3)
+        home_page.click_button_order_feed()
+        current_url = home_page.transition_order_feed_and_return_current_url()
+        assert current_url == urls.FEED_URL
+
+    @allure.title('При клике на ингредиент, появляется всплывающее окно с деталями')
+    def test_click_ingredient_open_window_with_details(self, driver):
+        home_page = HomePage(driver)
+        home_page.open(urls.BASE_URL)
+        time.sleep(3)
+        home_page.click_ingredient()
+        expected_text = 'Детали ингредиента'
+        actual_text = home_page.availability_modal_window_ingredient_details_text()
+        assert actual_text == expected_text
