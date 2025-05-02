@@ -57,14 +57,41 @@ class HomePage(BasePage):
         except TimeoutException:
             return False
 
-    @allure.step('Добавляем булочку в корзину')
-    def add_bun_basket(self):
-        source = self.driver.find_element(HomePageLocators.BUN_INGREDIENT)
-        target = self.driver.find_element(HomePageLocators.BASKET)
+    @allure.step('Добавляем соус в корзину')
+    def add_sauce_basket(self):
+        source = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable( HomePageLocators.BUN_INGREDIENT)
+        )
+        target = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located( HomePageLocators.BASKET)
+        )
         actions = ActionChains(self.driver)
         actions.drag_and_drop(source, target).perform()
 
-    @allure.step('Получаем количество ингредиентов в корзине')
+
+
+    @allure.step('Получаем каунтер для соуса')
     def get_count_ingredients_in_basket(self):
-        count = len(self.driver.find_elements(HomePageLocators.INGREDIENT_IN_BASKET))
+        WebDriverWait(self.driver, 30).until(
+            EC.presence_of_all_elements_located( HomePageLocators.SAUCE_COUNTER)
+        )
+        element = self.driver.find_element(*HomePageLocators.SAUCE_COUNTER)
+        count_text = element.text  # Получаем текст из элемента
+        count = int(count_text) if count_text.isdigit() else 0  # Преобразуем в целое число
+
         return count
+
+
+    @allure.step('Нажимаем на кнопку "Оформить заказ"')
+    def click_button_place_order(self):
+        WebDriverWait(self.driver,  10).until(
+            EC.element_to_be_clickable(HomePageLocators.BUTTON_PLACE_ORDER)
+        ).click()
+
+
+    @allure.step('Проверяем что есть модальное окно "Ваш заказ начали готовить"')
+    def availability_modal_window_ingredient_details_text(self):
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(HomePageLocators.ORDER_CONFIRMATION_WINDOW)
+        )
+        return element.text
