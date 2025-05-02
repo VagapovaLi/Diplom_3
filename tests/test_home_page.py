@@ -2,9 +2,7 @@ import allure
 import pytest
 import time
 import urls
-#from pages.feed_page import FeedPage
 from pages.home_page import HomePage
-from pages.login_page import LoginPage
 
 
 @pytest.mark.home_page

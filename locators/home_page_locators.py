@@ -12,3 +12,5 @@ class HomePageLocators:
     BUTTON_PLACE_ORDER = (By.XPATH, "//button[text()='Оформить заказ']")
 
     ORDER_CONFIRMATION_WINDOW= (By.CSS_SELECTOR, '.undefined.text.text_type_main-small.mb-2')
+
+    WINDOW_WITH_ORDER_ID=(By.XPATH,"//div/section/div[1]//h2")
