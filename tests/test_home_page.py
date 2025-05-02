@@ -4,6 +4,7 @@ import time
 import urls
 #from pages.feed_page import FeedPage
 from pages.home_page import HomePage
+from pages.login_page import LoginPage
 
 
 @pytest.mark.home_page
@@ -42,12 +43,28 @@ class TestHomePage:
         home_page.click_close_modal()
         assert home_page.control_close_modal_window()
 
+    #тут именно в мазиле не перетаскивается соус
     @allure.title('При добавлении ингредиента в заказ, увеличивается каунтер данного ингредиента')
     def test_click_ingredient_open_window_with_details(self, driver):
         home_page = HomePage(driver)
         home_page.open(urls.BASE_URL,wait_seconds=3)
-        home_page.add_bun_basket()
+        home_page.add_sauce_basket()
+        time.sleep(5)
         first_addition = home_page.get_count_ingredients_in_basket()
-        home_page.add_bun_basket()
+        home_page.add_sauce_basket()
+        time.sleep(5)
         second_addition = home_page.get_count_ingredients_in_basket()
+        time.sleep(5)
+        print(second_addition)
         assert second_addition > first_addition
+
+
+    @allure.title('Авторизованный пользователь оформил заказ')
+    def test_authorized_user_placed_order(self, driver, auth_user):
+        home_page = HomePage(driver)
+        home_page.add_sauce_basket()
+        home_page.click_button_place_order()
+        actual_message = home_page.availability_modal_window_ingredient_details_text()
+        expected_message = 'Ваш заказ начали готовить'
+        assert actual_message == expected_message
+
