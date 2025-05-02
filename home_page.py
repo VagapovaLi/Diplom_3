@@ -95,3 +95,20 @@ class HomePage(BasePage):
             EC.visibility_of_element_located(HomePageLocators.ORDER_CONFIRMATION_WINDOW)
         )
         return element.text
+
+
+    @allure.step('Получаем Id заказа')
+    def get_order_id(self):
+        element = WebDriverWait(self.driver, 20).until(
+            EC.visibility_of_element_located(HomePageLocators.WINDOW_WITH_ORDER_ID)
+        )
+        return element.text
+
+
+    @allure.step('Оформляем заказ')
+    def placing_order(self):
+        self.add_sauce_basket()
+        self.click_button_place_order()
+        order_id = self.get_order_id()
+        self.click_close_modal()
+        return order_id
