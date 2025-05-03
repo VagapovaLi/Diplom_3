@@ -64,10 +64,10 @@ class TestFeedOrders:
     def test_after_placing_order_number_appears_in_the_progress_section(self, driver,auth_user):
         home_page = HomePage(driver)
         time.sleep(3)
+
         order_id = home_page.placing_order()
         time.sleep(10)
+
         home_page.click_button_order_feed()
-        time.sleep(3)
-        feed_page = FeedPage(driver)
-        time.sleep(3)
-        assert feed_page.get_order_in_progress_list(order_id)
+        order_in_work = home_page.get_order_in_work()
+        assert int(order_id) == int(order_in_work)

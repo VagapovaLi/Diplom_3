@@ -1,6 +1,5 @@
 import allure
 import pytest
-import time
 import urls
 from pages.home_page import HomePage
 
@@ -47,13 +46,9 @@ class TestHomePage:
         home_page = HomePage(driver)
         home_page.open(urls.BASE_URL,wait_seconds=3)
         home_page.add_sauce_basket()
-        time.sleep(5)
         first_addition = home_page.get_count_ingredients_in_basket()
         home_page.add_sauce_basket()
-        time.sleep(5)
         second_addition = home_page.get_count_ingredients_in_basket()
-        time.sleep(5)
-        print(second_addition)
         assert second_addition > first_addition
 
 

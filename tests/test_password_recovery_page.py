@@ -2,7 +2,7 @@ import allure
 import urls
 from pages.login_page import LoginPage
 from pages.password_recovery_page import PasswordRecoveryPage
-import time
+
 
 class TestPasswordRecovery:
     @allure.title('Перехода на страницу восстановление пароля" по кнопк  "Восстановить пароль"')

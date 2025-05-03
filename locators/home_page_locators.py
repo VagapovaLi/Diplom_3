@@ -14,3 +14,11 @@ class HomePageLocators:
     ORDER_CONFIRMATION_WINDOW= (By.CSS_SELECTOR, '.undefined.text.text_type_main-small.mb-2')
 
     WINDOW_WITH_ORDER_ID=(By.XPATH,"//div/section/div[1]//h2")
+
+    IMG_BUN_INGREDIENT = (By.XPATH, "//img[@alt='Флюоресцентная булка R2-D3']")
+    MODAL_WINDOW_LOCATOR = (By.XPATH,'//div/section/div[1]/div')
+
+    ORDER_NUMBER = By.XPATH, '//p[text()="идентификатор заказа"]'
+
+    CROSS_ORDER = By.XPATH, "//button[contains(@class, 'Modal_modal__close')][1]"
+    NUMBER_IN_WORK = (By.CSS_SELECTOR, 'ul[class^="OrderFeed_orderListReady"] li[class*="text_type_digits-default"]')
