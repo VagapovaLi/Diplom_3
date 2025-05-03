@@ -27,3 +27,11 @@ class PersonalAccountPage(BasePage):
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(PersonalAccountPageLocators.BUTTON_EXIT)
         ).click()
+
+
+    @allure.step('Получаем номер последнего заказа')
+    def get_last_order_data(self):
+
+        return WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(PersonalAccountPageLocators.LIST_OF_ORDERS)
+        ).text

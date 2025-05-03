@@ -5,6 +5,8 @@ from pages.base_page import BasePage
 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+
+
 class FeedPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
@@ -26,7 +28,27 @@ class FeedPage(BasePage):
         )
 
 
-    @allure.step('Просматриваем заказы и проверяем наличие искомого')
+    @allure.step('Просматриваем заказы и проверяем наличие созданного')
     def find_target_order_in_history(self, target_order):
-        orders = self.presence_of_elements(*FeedPageLocators.LAST_50_ORDERS)
+        orders= WebDriverWait(self.driver, 20).until(
+            EC.presence_of_all_elements_located(FeedPageLocators.LAST_ORDERS)
+        )
         return any(target_order == order.text for order in orders)
+
+    @allure.step('Получаем количество выполненных заказов за всё время')
+    def get_number_completed_orders_all_time(self):
+        return WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(FeedPageLocators.NUMBER_OF_COMPLETED_ORDERS_ALL_TIME)
+        ).text
+
+    @allure.step('Получаем количество выполненных заказов за сегодня')
+    def get_number_completed_orders_for_today(self):
+        return WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(FeedPageLocators.NUMBER_OF_COMPLETED_ORDERS_FOR_TODAY)
+        ).text
+
+    @allure.step('Проверяем наличие заказа в списке "В работе"')
+    def get_order_in_progress_list(self, order_id):
+
+        return WebDriverWait(self.driver, 10).until(
+            EC.text_to_be_present_in_element(FeedPageLocators.NUMBER_OF_COMPLETED_ORDERS_ALL_TIME, order_id))

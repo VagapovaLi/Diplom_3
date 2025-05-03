@@ -1,5 +1,5 @@
 import allure
-
+import time
 from locators.home_page_locators import HomePageLocators
 from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,8 +9,9 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver import ActionChains
 
 class HomePage(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
+    def __init__(self, driver,timeout=20):
+        self.driver = driver
+        self.timeout = timeout
 
     @allure.step('Проверяем переход на главную страницу')
     def find_home_page_title_and_return_current_url(self):
@@ -22,7 +23,7 @@ class HomePage(BasePage):
 
     @allure.step('Проверяем переход в "Лента заказов"')
     def transition_order_feed_and_return_current_url(self):
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, 20).until(
             EC.visibility_of_element_located(FeedPageLocators.MODAL_ORDER_FEED)
         )
         return self.driver.current_url
@@ -43,9 +44,12 @@ class HomePage(BasePage):
 
     @allure.step('Закрыть через клик по крестику окно модальное окно')
     def click_close_modal(self):
-        WebDriverWait(self.driver,  10).until(
+        close_button = WebDriverWait(self.driver,  10).until(
             EC.element_to_be_clickable(HomePageLocators.BUTTON_CLOSE_MODAL_DETAIL)
-        ).click()
+        )#.click()
+
+        actions = ActionChains(self.driver)
+        actions.move_to_element(close_button).click().perform()
 
     @allure.step('Проверяем, что модальное окно закрыто')
     def control_close_modal_window(self):
@@ -66,7 +70,9 @@ class HomePage(BasePage):
             EC.visibility_of_element_located( HomePageLocators.BASKET)
         )
         actions = ActionChains(self.driver)
-        actions.drag_and_drop(source, target).perform()
+        time.sleep(5)
+        actions.click_and_hold(source).move_to_element(target).release().perform()
+        #actions.drag_and_drop(source, target).perform()
 
 
 

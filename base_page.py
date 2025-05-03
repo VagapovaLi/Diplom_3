@@ -3,6 +3,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from locators.base_page_locators import BasePageLocators
 import time
+
+
 class BasePage:
     def __init__(self, driver,timeout=20):
         self.driver = driver
@@ -32,6 +34,13 @@ class BasePage:
 
     @allure.step('Нажимаем на кнопку "Лента заказов" на главной странице')
     def click_button_order_feed(self):
-        WebDriverWait(self.driver,  10).until(
+        button = WebDriverWait(self.driver, 20).until(
             EC.element_to_be_clickable(BasePageLocators.BUTTON_ORDER_FEED)
-        ).click()
+        )
+
+        # Клик с помощью JavaScript
+        self.driver.execute_script("arguments[0].click();", button)
+
+        #WebDriverWait(self.driver,  20).until(
+            #EC.element_to_be_clickable(BasePageLocators.BUTTON_ORDER_FEED)
+        #).click()
