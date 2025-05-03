@@ -8,8 +8,9 @@ from pages.base_page import BasePage
 from data import LoginData
 
 class LoginPage(BasePage):
-    def __init__(self, driver):
+    def __init__(self, driver,timeout=20):
         super().__init__(driver)
+        self.timeout = timeout
 
 
     @allure.step('Нажимаем на кнопку "Восстановить пароль"')

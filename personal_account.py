@@ -3,6 +3,9 @@ from pages.base_page import BasePage
 from selenium.webdriver.support.ui import WebDriverWait
 from locators.personal_account_locators import PersonalAccountPageLocators
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+from locators.base_page_locators import BasePageLocators
+
 
 class PersonalAccountPage(BasePage):
     def __init__(self, driver,timeout=20):
@@ -35,3 +38,5 @@ class PersonalAccountPage(BasePage):
         return WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(PersonalAccountPageLocators.LIST_OF_ORDERS)
         ).text
+
+
