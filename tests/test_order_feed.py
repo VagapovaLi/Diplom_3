@@ -1,8 +1,6 @@
 import time
-
 import allure
 import pytest
-
 import urls
 from pages.feed_page import FeedPage
 from pages.home_page import HomePage
@@ -17,7 +15,6 @@ class TestFeedOrders:
         feed_page = FeedPage(driver)
         feed_page.open(urls.FEED_URL, wait_seconds=3)
         feed_page.click_button_order_feed()
-        time.sleep(5)
         assert feed_page.availability_modal_window_with_order_details
 
     @allure.title('Заказы пользователя из раздела «История заказов» отображаются на странице «Лента заказов»')
@@ -35,8 +32,8 @@ class TestFeedOrders:
     @allure.title('При создании нового заказа счётчик Выполнено за всё время увеличивается')
     def test_creating_new_order_completed_all_time_counter_increases(self, driver,auth_user):
         home_page = HomePage(driver)
-        time.sleep(3)
         home_page.click_button_order_feed()
+        time.sleep(5)
         feed_page = FeedPage(driver)
         total_old_value =feed_page.get_number_completed_orders_all_time()
         feed_page.click_button_link_constructor()
@@ -49,7 +46,6 @@ class TestFeedOrders:
     @allure.title('При создании нового заказа счётчик Выполнено за сегодня увеличивается')
     def test_creating_new_order_completed_today_counter_increases(self, driver,auth_user):
         home_page = HomePage(driver)
-        time.sleep(3)
         home_page.click_button_order_feed()
         feed_page = FeedPage(driver)
         all_orders_today =feed_page.get_number_completed_orders_all_time()
@@ -63,11 +59,8 @@ class TestFeedOrders:
     @allure.title('После оформления заказа его номер появляется в разделе В работе')
     def test_after_placing_order_number_appears_in_the_progress_section(self, driver,auth_user):
         home_page = HomePage(driver)
-        time.sleep(3)
-
         order_id = home_page.placing_order()
-        time.sleep(10)
-
         home_page.click_button_order_feed()
-        order_in_work = home_page.get_order_in_work()
-        assert int(order_id) == int(order_in_work)
+        feed_page = FeedPage(driver)
+        assert feed_page.get_order_in_progress_list(order_id)
+
