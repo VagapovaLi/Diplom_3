@@ -72,21 +72,18 @@ class HomePage(BasePage):
     @allure.step('Добавить ингредиент')
     def add_filling_to_order(self):
 
-        self.wait_element_to_be_clickable(HomePageLocators.BUN_INGREDIENT)
-        self.drag_and_drop_to_element(HomePageLocators.BUN_INGREDIENT, HomePageLocators.BASKET)
+        self.drag_and_drop(*HomePageLocators.IMG_BUN_INGREDIENT, *HomePageLocators.BASKET)
 
 
-        #
-        # source = WebDriverWait(self.driver, 10).until(
-        #     EC.element_to_be_clickable( HomePageLocators.BUN_INGREDIENT)
-        # )
-        # target = WebDriverWait(self.driver, 10).until(
-        #     EC.visibility_of_element_located( HomePageLocators.BASKET)
-        # )
-        # actions = ActionChains(self.driver)
-        # time.sleep(5)
-        # actions.click_and_hold(source).move_to_element(target).release().perform()
-        # #actions.drag_and_drop(source, target).perform()
+
+
+    @allure.step('Нажать на кнопку Оформить заказ')
+    def click_order_button(self):
+        self.find_clickable_element(*HomePageLocators.BUTTON_PLACE_ORDER).click()
+
+    @allure.step('Ждем полного формирования модального окна заказа')
+    def wait_order_modal_loaded(self):
+        self.wait_element_disappears(*HomePageLocators.LOADING_MODAL_WINDOW_ORDER)
 
     @allure.step('Добавляем булочку в корзину')
     def add_bun_basket(self):
@@ -130,47 +127,45 @@ class HomePage(BasePage):
 
     @allure.step('Получаем Id заказа')
     def get_order_id(self):
-        element = WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(HomePageLocators.WINDOW_WITH_ORDER_ID)
-        )
-        return element.text
+        return self.find_visability_element(*HomePageLocators.ORDER_ID_MODAL_WINDOW).text
 
-    @allure.step('Получить id заказа')
-    def get_order_id(self):
-        self.visibility_of_element(HomePageLocators.ORDER_NUMBER)
-        order_id = self.get_text(FeedPageLocators.ORDER_ID)
-        while order_id == '9999':
-            order_id = self.get_text(FeedPageLocators.ORDER_ID)
-        return f"{order_id}"
+
+
+    @allure.step('Закрываем модальное окно заказа')
+    def click_cross_in_order_modal_window(self):
+        cross_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(HomePageLocators.BUTTON_CROSS_MODAL_ORDER)
+        )
+        cross_button.click()
+        #self.find_clickable_element(*HomePageLocators.BUTTON_CROSS_MODAL_ORDER).click()
+
+    @allure.step('Перетаскиваем соус в корзину')
+    def add_sauce_basket(self):
+        self.drag_and_drop(*HomePageLocators.BUN_INGREDIENT_SAUCE, *HomePageLocators.BASKET)
 
 
     @allure.step('Сделать заказ')
     def placing_order(self):
 
-
         self.add_filling_to_order()
-        self.click_button_place_order()
-        self.get_order_id()
+        self.click_order_button()
+        self.wait_order_modal_loaded()
         order_id = self.get_order_id()
+        self.click_cross_in_order_modal_window()
         return order_id
-
-        # order_id = self.get_order_id()
-        # self.click_close_modal()
-        # return order_id
-
 
     @allure.step('Переместиться к элементу и нажать')
     def click_cross_order(self):
         self.move_to_element_and_click(HomePageLocators.CROSS_ORDER)
 
-    @allure.step('Оформляем заказ с булочкой')
-    def placing_order_bun(self):
-        self.add_bun_basket()
-
-        self.click_button_place_order()
-        order_id = self.get_order_id()
-        self.click_close_modal()
-        return order_id
+    # @allure.step('Оформляем заказ с булочкой')
+    # def placing_order_bun(self):
+    #     self.add_bun_basket()
+    #
+    #     self.click_order_button()
+    #     order_id = self.get_order_id()
+    #     self.click_close_modal()
+    #     return order_id
 
 
     @allure.step('Получаем номер заказа в работе')

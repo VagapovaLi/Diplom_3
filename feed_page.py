@@ -50,5 +50,4 @@ class FeedPage(BasePage):
     @allure.step('Проверяем наличие заказа в списке "В работе"')
     def get_order_in_progress_list(self, order_id):
 
-        return WebDriverWait(self.driver, 10).until(
-            EC.text_to_be_present_in_element(FeedPageLocators.NUMBER_OF_COMPLETED_ORDERS_ALL_TIME, order_id))
+        return self.text_present_in_element(*FeedPageLocators.ORDERS_IN_PROGRESS, order_id)
