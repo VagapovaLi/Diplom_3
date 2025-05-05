@@ -4,7 +4,7 @@ import pytest
 import urls
 from pages.feed_page import FeedPage
 from pages.home_page import HomePage
-from pages.personal_account import PersonalAccountPage
+from pages.personal_account_page import PersonalAccountPage
 from locators.feed_page_locators import FeedPageLocators
 
 

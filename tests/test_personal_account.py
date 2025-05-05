@@ -1,6 +1,6 @@
 import allure
 import urls
-from pages.personal_account import PersonalAccountPage
+from pages.personal_account_page import PersonalAccountPage
 from pages.login_page import LoginPage
 import time
 
