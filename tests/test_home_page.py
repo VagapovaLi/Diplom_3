@@ -16,7 +16,7 @@ class TestHomePage:
         assert current_url == urls.BASE_URL
 
     @allure.title('Проверка перехода в "Лента заказов"')
-    def test_go_to_constructor(self, driver):
+    def test_go_to_order_feed(self, driver):
         home_page = HomePage(driver)
         home_page.open(urls.LOGIN_URL,wait_seconds=3)
         home_page.click_button_order_feed()
@@ -33,21 +33,20 @@ class TestHomePage:
         assert actual_text == expected_text
 
     @allure.title('Всплывающее окно закрывается кликом по крестику')
-    def test_click_ingredient_open_window_with_details(self, driver):
+    def test_pop_up_window_closed_clicking_cross(self, driver):
         home_page = HomePage(driver)
         home_page.open(urls.BASE_URL,wait_seconds=3)
         home_page.click_ingredient()
         home_page.click_close_modal()
         assert home_page.control_close_modal_window()
 
-    #тут именно в мазиле не перетаскивается соус
     @allure.title('При добавлении ингредиента в заказ, увеличивается каунтер данного ингредиента')
-    def test_click_ingredient_open_window_with_details(self, driver):
+    def add_ingredient_order_counter_ingredient_increases(self, driver):
         home_page = HomePage(driver)
         home_page.open(urls.BASE_URL,wait_seconds=3)
-        home_page.add_sauce_basket()
+        home_page.add_filling_to_order_sauce()
         first_addition = home_page.get_count_ingredients_in_basket()
-        home_page.add_sauce_basket()
+        home_page.add_filling_to_order_sauce()
         second_addition = home_page.get_count_ingredients_in_basket()
         assert second_addition > first_addition
 
@@ -55,7 +54,7 @@ class TestHomePage:
     @allure.title('Авторизованный пользователь оформил заказ')
     def test_authorized_user_placed_order(self, driver, auth_user):
         home_page = HomePage(driver)
-        home_page.add_sauce_basket()
+        home_page.make_order()
         home_page.click_button_place_order()
         actual_message = home_page.availability_modal_window_ingredient_details_text()
         expected_message = 'Ваш заказ начали готовить'

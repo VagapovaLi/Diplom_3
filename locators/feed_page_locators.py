@@ -20,3 +20,4 @@ class FeedPageLocators:
     ORDERS_FEED = (By.XPATH, ".//div[@class='OrderHistory_textBox__3lgbs mb-6']//p[@class='text "
                                     "text_type_digits-default']")
     ORDER_ID = (By.CLASS_NAME, "Modal_modal__title_shadow__3ikwq")
+    ALL_ORDER_COUNT = (By.XPATH, "//p[text()='Выполнено за все время:']/following-sibling::p")

@@ -5,6 +5,7 @@ import urls
 from pages.feed_page import FeedPage
 from pages.home_page import HomePage
 from pages.personal_account import PersonalAccountPage
+from locators.feed_page_locators import FeedPageLocators
 
 
 @pytest.mark.feed_page
@@ -20,8 +21,8 @@ class TestFeedOrders:
     @allure.title('Заказы пользователя из раздела «История заказов» отображаются на странице «Лента заказов»')
     def test_orders_from_order_history_displayed_order_feed(self, driver,auth_user):
         home_page = HomePage(driver)
-        home_page.placing_order()
-        time.sleep(5)
+        home_page.make_order()
+        home_page.click_cross_in_order_modal_window()
         home_page.click_button_personal_account()
         account = PersonalAccountPage(driver)
         account.click_button_order_history()
@@ -29,29 +30,32 @@ class TestFeedOrders:
         feed_page = FeedPage(driver)
         assert feed_page.find_target_order_in_history(last_order_number_in_account)
 
+
     @allure.title('При создании нового заказа счётчик Выполнено за всё время увеличивается')
     def test_creating_new_order_completed_all_time_counter_increases(self, driver,auth_user):
         home_page = HomePage(driver)
-        home_page.click_button_order_feed()
         time.sleep(5)
+        home_page.click_button_order_feed()
+        home_page.visibility_of_element(FeedPageLocators.ALL_ORDER_COUNT)
         feed_page = FeedPage(driver)
         total_old_value =feed_page.get_number_completed_orders_all_time()
         feed_page.click_button_link_constructor()
         home_page = HomePage(driver)
-        home_page.placing_order()
+        home_page.make_order()
         home_page.click_button_order_feed()
-        new_value =feed_page.get_number_completed_orders_for_today()
+        new_value =feed_page.get_number_completed_orders_all_time()
         assert new_value > total_old_value
 
     @allure.title('При создании нового заказа счётчик Выполнено за сегодня увеличивается')
     def test_creating_new_order_completed_today_counter_increases(self, driver,auth_user):
         home_page = HomePage(driver)
+        time.sleep(5)
         home_page.click_button_order_feed()
         feed_page = FeedPage(driver)
-        all_orders_today =feed_page.get_number_completed_orders_all_time()
+        all_orders_today =feed_page.get_number_completed_orders_for_today()
         feed_page.click_button_link_constructor()
         home_page = HomePage(driver)
-        home_page.placing_order()
+        home_page.make_order()
         home_page.click_button_order_feed()
         new_value_orders_today =feed_page.get_number_completed_orders_for_today()
         assert new_value_orders_today > all_orders_today
@@ -59,7 +63,7 @@ class TestFeedOrders:
     @allure.title('После оформления заказа его номер появляется в разделе В работе')
     def test_after_placing_order_number_appears_in_the_progress_section(self, driver,auth_user):
         home_page = HomePage(driver)
-        order_id = home_page.placing_order()
+        order_id = home_page.make_order()
         home_page.click_button_order_feed()
         feed_page = FeedPage(driver)
         assert feed_page.get_order_in_progress_list(order_id)

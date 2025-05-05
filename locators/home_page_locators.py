@@ -16,6 +16,7 @@ class HomePageLocators:
     WINDOW_WITH_ORDER_ID=(By.XPATH,"//div/section/div[1]//h2")
 
     IMG_BUN_INGREDIENT = (By.XPATH, "//img[@alt='Флюоресцентная булка R2-D3']")
+    IMG_SAUCE_INGREDIENT = (By.XPATH, "//img[@alt='Соус Spicy-X']")
     MODAL_WINDOW_LOCATOR = (By.XPATH,'//div/section/div[1]/div')
 
     ORDER_NUMBER = By.XPATH, '//p[text()="идентификатор заказа"]'
@@ -26,5 +27,8 @@ class HomePageLocators:
     LOADING_MODAL_WINDOW_ORDER = (By.XPATH, "//div[@class='Modal_modal_opened__3ISw4 Modal_modal__P3_V5']")
     ORDER_ID_MODAL_WINDOW = (
     By.CSS_SELECTOR, '.Modal_modal__title_shadow__3ikwq.Modal_modal__title__2L34m.text.text_type_digits-large.mb-8')
-    BUTTON_CROSS_MODAL_ORDER = (
-    By.XPATH, "//button[@class='Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']")
+
+
+    CONSTRUCTOR_BASKET =By.XPATH, "//span[@class='constructor-element__text' and text()='Перетяните булочку сюда (верх)']"
+
+    BUTTON_CROSS_MODAL_ORDER = (By.XPATH, "//button[@class='Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']")
