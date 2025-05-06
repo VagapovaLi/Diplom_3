@@ -33,11 +33,12 @@ class TestFeedOrders:
 
     @allure.title('При создании нового заказа счётчик Выполнено за всё время увеличивается')
     def test_creating_new_order_completed_all_time_counter_increases(self, driver,auth_user):
-        home_page = HomePage(driver)
-        time.sleep(5)
-        home_page.click_button_order_feed()
-        home_page.visibility_of_element(FeedPageLocators.ALL_ORDER_COUNT)
         feed_page = FeedPage(driver)
+
+        feed_page.click_button_order_feed()
+
+        # home_page.visibility_of_element(FeedPageLocators.ALL_ORDER_COUNT)
+        # feed_page = FeedPage(driver)
         total_old_value =feed_page.get_number_completed_orders_all_time()
         feed_page.click_button_link_constructor()
         home_page = HomePage(driver)
@@ -48,9 +49,8 @@ class TestFeedOrders:
 
     @allure.title('При создании нового заказа счётчик Выполнено за сегодня увеличивается')
     def test_creating_new_order_completed_today_counter_increases(self, driver,auth_user):
-        home_page = HomePage(driver)
-        time.sleep(5)
-        home_page.click_button_order_feed()
+        feed_page = FeedPage(driver)
+        feed_page.click_button_order_feed()
         feed_page = FeedPage(driver)
         all_orders_today =feed_page.get_number_completed_orders_for_today()
         feed_page.click_button_link_constructor()

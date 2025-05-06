@@ -13,10 +13,10 @@ class BasePage:
         self.timeout = timeout
 
     @allure.step('Открываем страницу: {url}')
-    def open(self, url, wait_seconds=2):
+    def open(self, url,):
         self.driver.get(url)
-        if wait_seconds > 0:
-            time.sleep(wait_seconds)
+        # if wait_seconds > 0:
+        #     time.sleep(wait_seconds)
 
     @allure.step("Ожидание кликабельного элемента на странице")
     def wait_element_to_be_clickable(self, locator):
@@ -37,7 +37,7 @@ class BasePage:
         except TimeoutException:
             raise TimeoutException(f'\nElement not clickable after {self.timeout} seconds')
 
-    def find_visability_element(self, how, what):
+    def find_visibility_element(self, how, what):
         try:
             return WebDriverWait(self.driver, self.timeout).until(EC.visibility_of_element_located((how, what)))
         except TimeoutException:
