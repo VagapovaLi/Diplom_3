@@ -29,6 +29,4 @@ class HomePageLocators:
     By.CSS_SELECTOR, '.Modal_modal__title_shadow__3ikwq.Modal_modal__title__2L34m.text.text_type_digits-large.mb-8')
 
 
-    CONSTRUCTOR_BASKET =By.XPATH, "//span[@class='constructor-element__text' and text()='Перетяните булочку сюда (верх)']"
-
     BUTTON_CROSS_MODAL_ORDER = (By.XPATH, "//button[@class='Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']")

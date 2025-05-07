@@ -1,11 +1,9 @@
-import time
 import allure
 import pytest
 import urls
 from pages.feed_page import FeedPage
 from pages.home_page import HomePage
 from pages.personal_account_page import PersonalAccountPage
-from locators.feed_page_locators import FeedPageLocators
 
 
 @pytest.mark.feed_page
@@ -14,7 +12,7 @@ class TestFeedOrders:
     @allure.title('Авторизованный пользователь оформил заказ')
     def test_authorized_user_placed_order(self, driver):
         feed_page = FeedPage(driver)
-        feed_page.open(urls.FEED_URL, wait_seconds=3)
+        feed_page.open(urls.FEED_URL)
         feed_page.click_button_order_feed()
         assert feed_page.availability_modal_window_with_order_details
 
@@ -22,7 +20,6 @@ class TestFeedOrders:
     def test_orders_from_order_history_displayed_order_feed(self, driver,auth_user):
         home_page = HomePage(driver)
         home_page.make_order()
-        home_page.click_cross_in_order_modal_window()
         home_page.click_button_personal_account()
         account = PersonalAccountPage(driver)
         account.click_button_order_history()
@@ -30,15 +27,10 @@ class TestFeedOrders:
         feed_page = FeedPage(driver)
         assert feed_page.find_target_order_in_history(last_order_number_in_account)
 
-
     @allure.title('При создании нового заказа счётчик Выполнено за всё время увеличивается')
     def test_creating_new_order_completed_all_time_counter_increases(self, driver,auth_user):
         feed_page = FeedPage(driver)
-
         feed_page.click_button_order_feed()
-
-        # home_page.visibility_of_element(FeedPageLocators.ALL_ORDER_COUNT)
-        # feed_page = FeedPage(driver)
         total_old_value =feed_page.get_number_completed_orders_all_time()
         feed_page.click_button_link_constructor()
         home_page = HomePage(driver)

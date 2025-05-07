@@ -21,3 +21,5 @@ class FeedPageLocators:
                                     "text_type_digits-default']")
     ORDER_ID = (By.CLASS_NAME, "Modal_modal__title_shadow__3ikwq")
     ALL_ORDER_COUNT = (By.XPATH, "//p[text()='Выполнено за все время:']/following-sibling::p")
+
+    MODAL_ORDER_FEED = (By.XPATH, "//p[text()='Лента Заказов']")
