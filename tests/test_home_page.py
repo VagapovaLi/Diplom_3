@@ -51,12 +51,10 @@ class TestHomePage:
         second_addition = home_page.get_count_ingredients_in_basket()
         assert second_addition > first_addition
 
-
     @allure.title('Авторизованный пользователь оформил заказ')
     def test_authorized_user_placed_order(self, driver, auth_user):
         home_page = HomePage(driver)
         home_page.add_filling_to_order_sauce()
-        #home_page.make_order()
         home_page.click_button_place_order()
         actual_message = home_page.availability_modal_window_order_has_started_text()
         expected_message = 'Ваш заказ начали готовить'
