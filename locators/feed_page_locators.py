@@ -9,7 +9,6 @@ class FeedPageLocators:
 
     NUMBER_OF_COMPLETED_ORDERS_FOR_TODAY = (By.XPATH, "//div[@class='OrderFeed_ordersData__1L6Iv']"
                               "//div[3]//p[@class='OrderFeed_number__2MbrQ text text_type_digits-large']")
-
     ORDERS_IN_PROGRESS = (By.XPATH, "//ul[@class='OrderFeed_orderListReady__1YFem OrderFeed_orderList__cBvyi']"
                                     "//li[@class='text text_type_digits-default mb-2']")
 
