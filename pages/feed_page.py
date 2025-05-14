@@ -2,6 +2,7 @@ import allure
 from locators.feed_page_locators import FeedPageLocators
 from pages.base_page import BasePage
 
+
 class FeedPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
@@ -23,7 +24,7 @@ class FeedPage(BasePage):
 
     @allure.step('Получаем количество выполненных заказов за всё время')
     def get_number_completed_orders_all_time(self):
-        return self.find_visibility_element(*FeedPageLocators.NUMBER_OF_COMPLETED_ORDERS_ALL_TIME).text
+        return self.find_visibility_element(*FeedPageLocators.ALL_ORDER_COUNT).text
 
     @allure.step('Получаем количество выполненных заказов за сегодня')
     def get_number_completed_orders_for_today(self):
@@ -33,3 +34,4 @@ class FeedPage(BasePage):
     @allure.step('Проверяем наличие заказа в списке "В работе"')
     def get_order_in_progress_list(self, order_id):
         return self.text_present_in_element(*FeedPageLocators.ORDERS_IN_PROGRESS, order_id)
+
